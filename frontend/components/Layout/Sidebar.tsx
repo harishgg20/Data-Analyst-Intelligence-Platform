@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, BarChart3, Settings, LogOut, PieChart } from 'lucide-react';
+import { LayoutDashboard, BarChart3, Settings, LogOut, PieChart, UploadCloud } from 'lucide-react';
 
 const Sidebar = () => {
     const pathname = usePathname();
@@ -11,6 +11,7 @@ const Sidebar = () => {
         { href: '/dashboard', label: 'Overview', icon: LayoutDashboard },
         { href: '/dashboard/reports', label: 'Reports', icon: BarChart3 },
         { href: '/dashboard/analytics', label: 'Analytics', icon: PieChart },
+        { href: '/dashboard/upload', label: 'Data Import', icon: UploadCloud },
         { href: '/dashboard/settings', label: 'Settings', icon: Settings },
     ];
 
@@ -29,8 +30,8 @@ const Sidebar = () => {
                             key={link.href}
                             href={link.href}
                             className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive
-                                    ? 'bg-blue-600 text-white'
-                                    : 'text-slate-300 hover:bg-slate-800 hover:text-white'
+                                ? 'bg-blue-600 text-white'
+                                : 'text-slate-300 hover:bg-slate-800 hover:text-white'
                                 }`}
                         >
                             <Icon size={20} />

@@ -97,8 +97,7 @@ const ExecutiveReport = () => {
                         <div className="mt-8 pt-6 border-t border-slate-100 flex justify-between items-center">
                             <p className="text-xs text-slate-400">Confidential - Internal Use Only</p>
                             <div className="flex items-center gap-1 text-slate-400">
-                                <Sparkles size={12} />
-                                <span className="text-xs">Powered by Gemini</span>
+                                <span className="text-xs"> </span>
                             </div>
                         </div>
                     </div>

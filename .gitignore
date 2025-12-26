@@ -24,3 +24,13 @@ dist/
 # System
 .DS_Store
 Thumbs.db
+
+# Logs and Debug
+*.log
+*.txt
+debug_*.py
+force_log.txt
+models_list.txt
+__pycache__/
+pytest_cache/
+.pytest_cache/

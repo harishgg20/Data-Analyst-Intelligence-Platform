@@ -17,6 +17,8 @@ class User(Base):
     role = Column(String, default=UserRole.VIEWER, nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
+    saved_views = relationship("SavedView", back_populates="user")
+
 class Customer(Base):
     __tablename__ = "customers"
 
@@ -33,9 +35,12 @@ class Product(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, index=True, nullable=False)
-    category = Column(String, index=True)
+    category = Column(String, index=True, nullable=False)
     price = Column(Float, nullable=False)
-    cost = Column(Float, nullable=False) # For profit calculation
+    cost = Column(Float, nullable=False) # For margin calc
+    stock_quantity = Column(Integer, default=0)
+    sku = Column(String, nullable=True, unique=True)
+    low_stock_threshold = Column(Integer, default=10)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
 class MarketingChannel(Base):
@@ -87,3 +92,36 @@ class AIInsight(Base):
     content = Column(Text, nullable=False)
     confidence_score = Column(Float, nullable=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+class SavedView(Base):
+    __tablename__ = "saved_views"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    name = Column(String, nullable=False)
+    settings = Column(Text, nullable=False) # JSON blob for simplicity
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+    user = relationship("User", back_populates="saved_views")
+
+class AlertRule(Base):
+    __tablename__ = "alert_rules"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    name = Column(String, nullable=False)
+    metric = Column(String, nullable=False) # REVENUE, ORDERS, AOV
+    condition = Column(String, nullable=False) # GT, LT
+    threshold = Column(Float, nullable=False)
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+    last_triggered_at = Column(DateTime(timezone=True), nullable=True)
+
+class AlertNotification(Base):
+    __tablename__ = "alert_notifications"
+    
+    id = Column(Integer, primary_key=True, index=True)
+    rule_id = Column(Integer, ForeignKey("alert_rules.id"), nullable=True) # Optional in case rule deleted
+    message = Column(String, nullable=False)
+    is_read = Column(Boolean, default=False)
+    created_at = Column(DateTime(timezone=True), server_default=func.now())
+

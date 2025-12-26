@@ -8,7 +8,7 @@ from typing import Annotated
 from .. import schemas, database, models, auth
 
 router = APIRouter(
-    prefix="/auth",
+    prefix="/api/auth",
     tags=["Authentication"]
 )
 

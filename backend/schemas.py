@@ -48,3 +48,38 @@ class AIInsightResponse(AIInsightBase):
     
     class Config:
         orm_mode = True
+
+class SavedViewBase(BaseModel):
+    name: str
+    settings: str # JSON string
+
+class SavedViewCreate(SavedViewBase):
+    pass
+
+class SavedViewResponse(SavedViewBase):
+    id: int
+    user_id: int
+    created_at: datetime
+    
+    class Config:
+        orm_mode = True
+
+class ProductBase(BaseModel):
+    name: str
+    category: str
+    price: float
+    cost: float
+    stock_quantity: int = 0
+    sku: Optional[str] = None
+    low_stock_threshold: int = 10
+
+class ProductCreate(ProductBase):
+    pass
+
+class ProductResponse(ProductBase):
+    id: int
+    created_at: datetime
+
+    class Config:
+        orm_mode = True
+

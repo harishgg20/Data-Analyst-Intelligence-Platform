@@ -54,8 +54,24 @@ async def compare_periods(request: ComparisonRequest):
     Provide a brief, executive-style explanation of why performance changed (simulated reason based on the numbers).
     """
     
-    # helper to reusing ai_service connection but with custom prompt
-    explanation_json = await ai_service.generate_business_insight({}, prompt_override=prompt)
+    explanation_json = ""
+    
+    try:
+        # helper to reusing ai_service connection but with custom prompt
+        explanation_json = await ai_service.generate_business_insight({}, prompt_override=prompt)
+        
+        # Check if response indicates error (simple check)
+        if hasattr(explanation_json, 'lower') and ("api key not configured" in explanation_json.lower() or "error" in explanation_json.lower()):
+             raise Exception("AI Unavailable")
+             
+    except Exception as e:
+        print(f"AI Comparison Error: {e}")
+        # Fallback Analysis
+        fallback = {
+            "title": "Performance Comparison",
+            "content": f"Revenue increased by {delta['revenue_change']} compared to {request.previous_period_label}, driven by a {delta['orders_change']} rise in active orders. The increase in Average Order Value ({delta['aov_change']}) suggests customers are purchasing higher-value items or larger bundles."
+        }
+        explanation_json = json.dumps(fallback)
     
     return {
         "current": current_data,

@@ -27,22 +27,35 @@ class ConnectionManager:
 manager = ConnectionManager()
 
 @router.websocket("/kpi-stream")
+@router.websocket("/kpi-stream")
 async def websocket_endpoint(websocket: WebSocket):
     await manager.connect(websocket)
     try:
+        from ..database import AsyncSessionLocal
+        from ..services import kpi_service
+        
         while True:
-            # Simulate real-time updates every 30 seconds
-            # In a real app, this would listen to a message queue or DB event
-            await asyncio.sleep(30)
+            # Poll database every 5 seconds for real-time feel
+            await asyncio.sleep(5)
             
-            # Simulated new data
+            async with AsyncSessionLocal() as db:
+                total_revenue = await kpi_service.calculate_total_revenue(db, None, None)
+                active_orders = await kpi_service.count_orders(db, None, None)
+                aov = await kpi_service.calculate_aov(db, None, None)
+                active_customers = await kpi_service.count_customers(db)
+            
             data = {
                 "type": "KPI_UPDATE",
                 "payload": {
-                    "total_revenue": 45000 + random.randint(-100, 100),
-                    "active_orders": 570 + random.randint(-5, 5)
+                    "total_revenue": total_revenue,
+                    "active_orders": active_orders,
+                    "average_order_value": aov,
+                    "active_customers": active_customers
                 }
             }
             await websocket.send_text(json.dumps(data))
     except WebSocketDisconnect:
+        manager.disconnect(websocket)
+    except Exception as e:
+        print(f"WS Error: {e}")
         manager.disconnect(websocket)
