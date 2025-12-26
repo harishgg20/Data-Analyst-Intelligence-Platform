@@ -9,23 +9,28 @@ A cutting-edge, **AI-powered Business Intelligence Dashboard** designed to trans
 
 ## 🚀 Features
 
-### 🧠 Generative AI Intelligence
-- **Real-time Business Insights**: Automatically detects trends, anomalies, and opportunities in your sales data.
-- **Comparison Analysis**: Select any two time periods, and the AI will analyze "Why did revenue drop/grow?" by decomposing the drivers.
+### 🧠 Generative AI Intelligence (Gemini 1.5 Flash)
+- **Instant Business Insights**: Automatically detects trends, anomalies, and opportunities in your sales data with resilient error handling.
+- **Smart Explanations**: Click "Info" on any chart to get a context-aware explanation (e.g., "Why is Electronics revenue up?").
+- **Comparison Analysis**: Select any two time periods to analyze KPI deltas and deeper drivers.
 - **Executive Summaries**: One-click generation of professional PDF reports for C-suite stakeholders.
-- **Voice Narration**: Listen to your daily business brief with text-to-speech integration.
 
-### 📈 Core Analytics
-- **Live WebSocket Streaming**: Watch orders and revenue update in real-time without refreshing.
-- **Interactive Visualizations**:
-  - Revenue Trend Lines
-  - Category Performance Bars
-  - Regional Heatmaps
-- **Drill-Down Filters**: Slice data by Date, Category, Region, and Marketing Channel.
+### 📊 Advanced Analytics Suite
+- **Marketing ROI**: Track ROAS and CAC across channels with performance visualization.
+- **Retention Analysis**: Cohort heatmaps to visualize customer retention over time.
+- **Market Basket Analysis**: Network graphs showing "Frequently Bought Together" product affinities.
+- **Inventory Management**: Track stock levels, low-stock alerts, and forecast demand.
+
+### 📈 Core & Real-time Ops
+- **Live WebSocket Streaming**: Watch orders and revenue update in real-time.
+- **Interactive Dashboards**:
+  - Drill-down by Category, Region, and Channel.
+  - "Save View" functionality to bookmark filter configurations.
+- **Smart Alerts**: Customizable thresholds for Revenue drops or high-value orders.
 
 ### 🛡️ Enterprise Ready
 - **Role-Based Access**: Secure Admin vs. Viewer roles.
-- **PDF Exports**: Instant high-quality exports of dashboard views.
+- **Optimized Performance**: Redis-like caching for instant dashboard navigation.
 - **Data Security**: JWT Authentication and securely hashed passwords.
 
 ## 🛠️ Technology Stack
@@ -37,7 +42,7 @@ A cutting-edge, **AI-powered Business Intelligence Dashboard** designed to trans
 | **Charts** | Recharts | Composable charting library |
 | **Backend** | FastAPI | High-performance Python web framework |
 | **Database** | PostgreSQL + SQLAlchemy | Async database access |
-| **AI Model** | Google Gemini 1.5 Flash | Fast, cost-effective LLM for reasoning |
+| **AI Model** | Google Gemini 1.5 Flash | Fast, resilient LLM for insights (Free Tier Friendly) |
 | **Realtime** | WebSockets | Push-based updates from server to client |
 
 ## 📦 Setup & Installation
